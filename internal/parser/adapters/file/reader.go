@@ -6,14 +6,14 @@ import (
 	"io"
 	"log/slog"
 
-	"github.com/guil95/csv-parser/internal/parser"
+	port "github.com/guil95/csv-parser/internal/parser/ports/file"
 )
 
 type csvReader struct {
 	reader *csv.Reader
 }
 
-func NewCSVReader(r *csv.Reader) parser.ReaderFile {
+func NewCSVReader(r *csv.Reader) port.ReaderFile {
 	return &csvReader{reader: r}
 }
 
@@ -31,7 +31,6 @@ func (c csvReader) GetNextRecord(ctx context.Context) ([]string, error) {
 	record, err := c.reader.Read()
 
 	if err == io.EOF {
-		slog.DebugContext(ctx, "EOF file", "error", err)
 		return nil, err
 	}
 

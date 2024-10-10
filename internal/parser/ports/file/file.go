@@ -1,7 +1,8 @@
-package parser
+package file
 
 import (
 	"context"
+	"github.com/guil95/csv-parser/internal/parser"
 )
 
 type ReaderFile interface {
@@ -10,5 +11,5 @@ type ReaderFile interface {
 }
 
 type WriterFile interface {
-	GenerateFile(ctx context.Context, lines []Line, filePath string) error
+	GenerateFile(ctx context.Context, lines []parser.Line, filePath string) error
 }

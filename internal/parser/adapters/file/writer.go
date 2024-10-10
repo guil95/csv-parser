@@ -10,12 +10,13 @@ import (
 	"time"
 
 	"github.com/guil95/csv-parser/internal/parser"
+	port "github.com/guil95/csv-parser/internal/parser/ports/file"
 )
 
 type csvWriter struct {
 }
 
-func NewCSVWriter() parser.WriterFile {
+func NewCSVWriter() port.WriterFile {
 	return &csvWriter{}
 }
 

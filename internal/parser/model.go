@@ -14,15 +14,7 @@ func (l *Line) IsValid() bool {
 	return err == nil
 }
 
-type ParserModel interface {
-	AddLine(line Line)
-	TotalLines() int
-	RetrieveInvalidLines() []Line
-	RetrieveValidLines() []Line
-	CleanLines()
-}
-
-type parser struct {
+type Parser struct {
 	invalidLines []Line
 	validLines   []Line
 	emails       map[string]bool
@@ -33,11 +25,11 @@ const (
 	ValidFilesPath   = "data/valid_files"
 )
 
-func NewParser() ParserModel {
-	return &parser{invalidLines: []Line{}, validLines: []Line{}, emails: make(map[string]bool)}
+func NewParser() *Parser {
+	return &Parser{invalidLines: []Line{}, validLines: []Line{}, emails: make(map[string]bool)}
 }
 
-func (p *parser) AddLine(line Line) {
+func (p *Parser) AddLine(line Line) {
 	if line.Email == "" || !p.emails[line.Email] {
 		if line.IsValid() {
 			p.validLines = append(p.validLines, line)
@@ -49,21 +41,21 @@ func (p *parser) AddLine(line Line) {
 	}
 }
 
-func (p *parser) TotalLines() int {
+func (p *Parser) TotalLines() int {
 	var lines = append(p.invalidLines, p.validLines...)
 
 	return len(lines)
 }
 
-func (p *parser) RetrieveInvalidLines() []Line {
+func (p *Parser) RetrieveInvalidLines() []Line {
 	return p.invalidLines
 }
 
-func (p *parser) RetrieveValidLines() []Line {
+func (p *Parser) RetrieveValidLines() []Line {
 	return p.validLines
 }
 
-func (p *parser) CleanLines() {
+func (p *Parser) CleanLines() {
 	p.invalidLines = []Line{}
 	p.validLines = []Line{}
 }

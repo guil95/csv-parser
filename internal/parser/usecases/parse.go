@@ -9,6 +9,7 @@ import (
 
 	"github.com/guil95/csv-parser/config"
 	"github.com/guil95/csv-parser/internal/parser"
+	port "github.com/guil95/csv-parser/internal/parser/ports/file"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -18,9 +19,9 @@ type (
 	}
 
 	parserUC struct {
-		reader      parser.ReaderFile
-		writer      parser.WriterFile
-		parserModel parser.ParserModel
+		reader      port.ReaderFile
+		writer      port.WriterFile
+		parserModel *parser.Parser
 	}
 )
 
@@ -39,7 +40,7 @@ var (
 	fieldIndexes = map[int]int{NameField: -1, EmailField: -1, SalaryField: -1, IDField: -1}
 )
 
-func NewParserUC(reader parser.ReaderFile, writer parser.WriterFile) ParserUC {
+func NewParserUC(reader port.ReaderFile, writer port.WriterFile) ParserUC {
 	return &parserUC{
 		reader:      reader,
 		writer:      writer,
