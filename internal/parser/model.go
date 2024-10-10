@@ -1,6 +1,10 @@
 package parser
 
-import "github.com/guil95/csv-parser/validator"
+import (
+	"fmt"
+	"github.com/fatih/color"
+	"github.com/guil95/csv-parser/validator"
+)
 
 type Line struct {
 	ID     string `json:"Employee ID" validate:"required,not_blank"`
@@ -32,8 +36,10 @@ func NewParser() *Parser {
 func (p *Parser) AddLine(line Line) {
 	if line.Email == "" || !p.emails[line.Email] {
 		if line.IsValid() {
+			color.Green(fmt.Sprintf("valid line added to file %v", line))
 			p.validLines = append(p.validLines, line)
 		} else {
+			color.Red(fmt.Sprintf("invalid line added to file %v", line))
 			p.invalidLines = append(p.invalidLines, line)
 		}
 

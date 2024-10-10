@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"os"
 
+	"github.com/fatih/color"
 	fileadapter "github.com/guil95/csv-parser/internal/parser/adapters/file"
 	port "github.com/guil95/csv-parser/internal/parser/ports/cli"
 	"github.com/guil95/csv-parser/internal/parser/usecases"
@@ -31,12 +32,16 @@ func New() port.CLI {
 }
 
 func (c cli) Run(ctx context.Context) error {
+	color.Blue("parse csv file started")
 	file, err := os.Open(c.filePath)
 	if err != nil {
 		slog.Error("Error opening file", "err", err)
 		return nil
 	}
-	defer file.Close()
+	defer func() {
+		file.Close()
+		color.Blue("parse csv file done")
+	}()
 
 	reader := csv.NewReader(file)
 	fileReader := fileadapter.NewCSVReader(reader)

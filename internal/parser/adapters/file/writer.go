@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/csv"
 	"fmt"
+	"github.com/fatih/color"
 	"log/slog"
 	"os"
 	"path/filepath"
@@ -34,7 +35,7 @@ func (c csvWriter) GenerateFile(ctx context.Context, lines []parser.Line, filePa
 	}
 	defer file.Close()
 
-	slog.Debug(fmt.Sprintf("generate file %s", fullPath))
+	color.Blue(fmt.Sprintf("generate file %s", fullPath))
 
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
@@ -52,7 +53,7 @@ func (c csvWriter) GenerateFile(ctx context.Context, lines []parser.Line, filePa
 			return err
 		}
 
-		slog.Debug(fmt.Sprintf("saving row %v", row))
+		color.Green(fmt.Sprintf("saving row %v", row))
 	}
 
 	writer.Flush()
