@@ -62,3 +62,5 @@ The project follows Hexagonal Architecture to achieve separation of concerns bet
 make run FILE=path/to/file
 ```
 
+The results will be created in `data/invalid_files` and `data/valid_files`
+
